@@ -31,7 +31,7 @@ $arComponentParameters = array(
             "ADDITIONAL_VALUES" => "Y",
             "REFRESH" => "Y",
         ),
-        "CACHE_TIME"  =>  Array("DEFAULT" => 3600),
+        "CACHE_TIME"  =>  Array("DEFAULT" => 86400),
     )
 );
 ?>
