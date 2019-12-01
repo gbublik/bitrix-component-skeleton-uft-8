@@ -15,10 +15,9 @@ class RepertoireComponent extends CBitrixComponent implements Controllerable
     {
         if ($this->startResultCache()) {
             try {
-
-                    $this->checkDependency();
-                    $this->arResultCacheKeys = [];
-                    $this->IncludeComponentTemplate();
+                $this->checkDependency();
+                $this->arResultCacheKeys = [];
+                $this->IncludeComponentTemplate();
             } catch (Exception $e) {
                 ShowError($e->getMessage());
                 $this->abortResultCache();
