@@ -1,13 +1,26 @@
 <?php
-use Bitrix\Main\Loader;
-use Bitrix\Main\Localization\Loc;
-use Bitrix\Main\SystemException;
-use Bitrix\Main\Engine\Contract\Controllerable;
 
-class RepertoireComponent extends CBitrixComponent implements Controllerable
+use Bitrix\Main\Application;
+use Bitrix\Main\Loader;
+use Bitrix\Main\LoaderException;
+use Bitrix\Main\SystemException;
+use Prodvigaeff\Bilet\Core\EventsTable;
+use Prodvigaeff\Bilet\Core\StageTable;
+use Bitrix\Main\Engine\Contract\Controllerable
+
+class StageRepertoireListComponent extends CBitrixComponent  implements Controllerable
 {
+    /** @var \Bitrix\Main\HttpResponse  */
+    protected $response;
+
+    public function __construct($component = null)
+    {
+        $this->response = Application::getInstance()->getContext()->getResponse();
+        parent::__construct($component);
+    }
+
     public function onPrepareComponentParams($arParams)
-    {        
+    {
         return $arParams;
     }
 
@@ -19,21 +32,33 @@ class RepertoireComponent extends CBitrixComponent implements Controllerable
                 $this->arResultCacheKeys = [];
                 $this->IncludeComponentTemplate();
             } catch (Exception $e) {
+                $this->response->setStatus('404 Not Found');
                 ShowError($e->getMessage());
                 $this->abortResultCache();
             }
         }
+        if ($this->arResult['stage']) {
+            $GLOBALS['APPLICATION']->SetTitle('Загаловок');
+            $GLOBALS['APPLICATION']->AddChainItem('Загаловок');
+        }
         return parent::executeComponent();
     }
 
+    /**
+     * @return bool
+     * @throws SystemException
+     * @throws LoaderException
+     */
     protected function checkDependency()
     {
-        if (!Loader::includeModule('prodvigaeff.ariston'))
-        {
-            throw new SystemException(Loc::getMessage('PD_ARISTON_MODULE_NOT_INSTALL'));
+        if (empty($this->arParams['STAGE_ID'])) {
+            throw new SystemException('Не установлен id зала');
+        }
+        if (!Loader::includeModule('prodvigaeff.bilet')) {
+            throw new SystemException('Module prodvigaeff.bilet not installed');
         }
         return true;
-    } 
+    }
     
     public function configureActions()
     {
