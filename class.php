@@ -3,7 +3,6 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\SystemException;
 use Bitrix\Main\Engine\Contract\Controllerable;
-use \Bitrix\Main\Data\Cache;
 
 class ContactsListComponent extends CBitrixComponent implements Controllerable
 {
@@ -15,18 +14,12 @@ class ContactsListComponent extends CBitrixComponent implements Controllerable
     public function executeComponent()
     {
         try {
-            $this->checkDependency();
-            
-            $cache = Cache::createInstance();
-            if ($cache->initCache($this->arParams['CACHE_TIME'], "IDCache")) {
-                $this->arResult = $cache->getVars();
-            } elseif ($cache->startDataCache()) {
-                //Запросы
-                $this->arResult = [];
-                $cache->endDataCache($this->arResult);
+            if ($this->startResultCache()) {
+                $this->checkDependency();
+                $this->arResultCacheKeys = [];
+                $this->IncludeComponentTemplate();
             }
-            
-            $this->IncludeComponentTemplate();
+
         } catch (Exception $e) {
             ShowError($e->getMessage());
         }
