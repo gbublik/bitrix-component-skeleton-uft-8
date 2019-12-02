@@ -6,9 +6,9 @@ use Bitrix\Main\LoaderException;
 use Bitrix\Main\SystemException;
 use Prodvigaeff\Bilet\Core\EventsTable;
 use Prodvigaeff\Bilet\Core\StageTable;
-use Bitrix\Main\Engine\Contract\Controllerable
+use Bitrix\Main\Engine\Contract\Controllerable;
 
-class StageRepertoireListComponent extends CBitrixComponent  implements Controllerable
+class PublicViteComponent extends CBitrixComponent  implements Controllerable
 {
     /** @var \Bitrix\Main\HttpResponse  */
     protected $response;
