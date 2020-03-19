@@ -11,4 +11,5 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(false);
+//<?=$this->getComponent()->getSignedParameters()?>
 ?>
