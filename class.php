@@ -60,6 +60,13 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
         return true;
     }
     
+    protected function listKeysSignedParameters()
+    {
+       return [
+              'IBLOCK_ID'
+         ];
+    }
+    
     public function configureActions()
     {
         return [
