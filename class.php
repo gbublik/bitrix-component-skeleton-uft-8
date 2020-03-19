@@ -13,6 +13,11 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
     /** @var \Bitrix\Main\HttpResponse  */
     protected $response;
 
+    /**
+     * PublicViteComponent constructor.
+     * @param null $component
+     * @throws SystemException
+     */
     public function __construct($component = null)
     {
         $this->response = Application::getInstance()->getContext()->getResponse();
