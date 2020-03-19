@@ -1,11 +1,8 @@
 <?php
-
 use Bitrix\Main\Application;
 use Bitrix\Main\Loader;
 use Bitrix\Main\LoaderException;
 use Bitrix\Main\SystemException;
-use Prodvigaeff\Bilet\Core\EventsTable;
-use Prodvigaeff\Bilet\Core\StageTable;
 use Bitrix\Main\Engine\Contract\Controllerable;
 
 class PublicViteComponent extends CBitrixComponent  implements Controllerable
