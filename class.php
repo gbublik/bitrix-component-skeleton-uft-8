@@ -10,6 +10,9 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
     /** @var \Bitrix\Main\HttpResponse  */
     protected $response;
 
+    /** @var \Bitrix\Main\HttpRequest|\Bitrix\Main\Request  */
+    protected $request;
+
     /**
      * PublicViteComponent constructor.
      * @param null $component
@@ -18,6 +21,7 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
     public function __construct($component = null)
     {
         $this->response = Application::getInstance()->getContext()->getResponse();
+        $this->request = Application::getInstance()->getContext()->getRequest();
         parent::__construct($component);
     }
 
@@ -53,22 +57,19 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
      */
     protected function checkDependency()
     {
-        if (empty($this->arParams['STAGE_ID'])) {
-            throw new SystemException('Не установлен id зала');
-        }
-        if (!Loader::includeModule('prodvigaeff.bilet')) {
-            throw new SystemException('Module prodvigaeff.bilet not installed');
+        if (!Loader::includeModule('iblock')) {
+            throw new SystemException('Module iblock not installed');
         }
         return true;
     }
-    
+
     protected function listKeysSignedParameters()
     {
        return [
               'IBLOCK_ID'
          ];
     }
-    
+
     public function configureActions()
     {
         return [
@@ -78,7 +79,7 @@ class PublicViteComponent extends CBitrixComponent  implements Controllerable
             ]
         ];
     }
-    
+
     public function testAction(int $id)
     {
         $this->checkDependency();
